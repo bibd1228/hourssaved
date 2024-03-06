@@ -1,0 +1,52 @@
+<html>
+<head></head>
+<script>
+	
+	let hoursSaved = 2000; // Total number of hours to be saved in a year
+
+	function getCurrentYearProgress() {
+	  const now = new Date();
+	  const startOfYear = new Date(now.getFullYear(), 0, 1);
+	  const endOfYear = new Date(now.getFullYear() + 1, 0, 1);
+
+	  // Calculate the total number of seconds in the year
+	  const totalSecondsInYear = (endOfYear - startOfYear) / 1000;
+
+	  // Calculate the number of seconds that have passed this year
+	  const secondsPassedThisYear = (now - startOfYear) / 1000;
+
+	  // Calculate the proportion of the year that has passed
+	  const proportionOfYearPassed = secondsPassedThisYear / totalSecondsInYear;
+
+	  return proportionOfYearPassed;
+	}
+
+	function updateText() {
+	  const updateProgress = () => {
+		let percentageOfYear = getCurrentYearProgress();
+		let totalSecondsSaved = percentageOfYear * hoursSaved * 3600; // Convert hours to seconds
+		
+		let hours = Math.floor(totalSecondsSaved / 3600);
+		let minutes = Math.floor((totalSecondsSaved % 3600) / 60);
+		let seconds = Math.floor(totalSecondsSaved % 60);
+		  
+		let progressText = `${hours} hours, ${minutes} minutes & ${seconds} seconds<br />saved in ${ new Date().getFullYear() } so far`;
+		
+		console.log(percentageOfYear); // Logging the percentage of the year that has passed
+		  
+		let title = document.getElementById("progress");
+  		title.innerHTML = progressText;
+	  }
+	  
+	  setInterval(updateProgress, 500); // Updated to refresh every second for accuracy
+  	}
+
+	updateText();
+</script>
+
+<body style="background-color:#000000">
+	<center>
+	<h1 id="progress" style="font-family:Helvetica;color:MAGENTA;margin-top:200px;font-size:3em"></h1>
+	</center>
+</body>
+</html>
